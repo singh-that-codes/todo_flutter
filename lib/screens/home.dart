@@ -32,14 +32,20 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TODO'),
-        backgroundColor: Colors.purple,
+        title: Text('TaskForge'),
+        backgroundColor: Color(0xff31304D),
+        actions: [
+          IconButton(
+            onPressed: ()async{
+              await FirebaseAuth.instance.signOut();
+          }, icon: Icon(Icons.logout_outlined)),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(10),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.grey,
+        color: Color(0xff161A30),
         child: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('tasks')
@@ -49,8 +55,8 @@ class _HomeState extends State<Home> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
-                height: 50.0,
-                width: 50.0,
+                height: 10.0,
+                width: 10.0,
                 child: CircularProgressIndicator(),
               );
             } else {
@@ -73,7 +79,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 10.0),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
+                        color: Color(0xff31304D),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       height: 100,
@@ -88,13 +94,14 @@ class _HomeState extends State<Home> {
                                 margin: EdgeInsets.only(left: 20),
                                 child: Text(
                                   docs[index]['title'],
-                                  style: GoogleFonts.roboto(fontSize: 18),
+                                  style: GoogleFonts.roboto(fontSize: 18,color: Color(0xffF0ECE5)),
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 20),
                                 child: Text(
                                   DateFormat.yMd().add_jm().format(time),
+                                  style: GoogleFonts.roboto(color: Color(0xffF0ECE5)),
                                 ),
                               ),
                             ],
@@ -110,7 +117,10 @@ class _HomeState extends State<Home> {
                                     .doc(docs[index].id)
                                     .delete();
                               },
-                              icon: Icon(Icons.delete),
+                              icon: Icon(
+                                Icons.delete,
+                                color: Color(0xffF0ECE5),
+                              ),
                             ),
                           ),
                           
@@ -129,7 +139,7 @@ class _HomeState extends State<Home> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AddTask()));
         },
-        backgroundColor: Colors.purple,
+        backgroundColor: Color(0xffF0ECE5),
         child: Icon(Icons.add, color: Colors.white),
       ),
     );

@@ -41,9 +41,10 @@ addtasktoFirebase()async {
     return Scaffold( 
       appBar: AppBar(
         title: Text('New Task'),
-        backgroundColor: Colors.purple,
+        backgroundColor: Color(0xff31304D),
       ),
       body: Container(
+        color: Color(0xff161A30),
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
@@ -73,9 +74,9 @@ addtasktoFirebase()async {
                 MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states){
                       if(states.contains(MaterialState.pressed)){
-                        return Colors.purple.shade100;
+                        return Color(0xffF0ECE5);
                       }
-                      return Colors.purple;
+                      return Color(0xffB6BBC4);
                     }
                   ),
                 ),
@@ -83,7 +84,7 @@ addtasktoFirebase()async {
                   addtasktoFirebase();
                 },
                 child: Text('Add Task',
-                  style: GoogleFonts.roboto(fontSize: 18)
+                  style: GoogleFonts.roboto(fontSize: 18,color: Color(0xffF0ECE5))
                   ),
                 ),
               ),],

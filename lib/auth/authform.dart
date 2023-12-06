@@ -58,10 +58,16 @@ class _AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        color: Color(0xff161A30),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: ListView(
           children: [
+            Container(
+              margin: EdgeInsets.all(35),
+              height:200,
+              child: (Image.asset('assets/TaskForge1.png'))
+            ),
             Container(
               padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Form(
@@ -83,6 +89,7 @@ class _AuthFormState extends State<AuthForm> {
                           _username = value!;
                         },
                         decoration: InputDecoration(
+                          fillColor: Color(0xffB6BBC4),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide(),
@@ -110,7 +117,7 @@ class _AuthFormState extends State<AuthForm> {
                           borderSide: BorderSide(),
                         ),
                         labelText: "Enter Email",
-                        labelStyle: GoogleFonts.roboto(),
+                        labelStyle: GoogleFonts.roboto(color:Color(0xffF0ECE5)),
                       ),
                     ),
                     const SizedBox(height: 10.0),
@@ -132,10 +139,10 @@ class _AuthFormState extends State<AuthForm> {
                           borderSide: const BorderSide(),
                         ),
                         labelText: "Enter Password",
-                        labelStyle: GoogleFonts.roboto(),
+                        labelStyle: GoogleFonts.roboto(color:Color(0xffF0ECE5)),
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.all(5.0),
                       height: 70,
@@ -148,22 +155,27 @@ class _AuthFormState extends State<AuthForm> {
                           startAuthentication();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple,
+                          backgroundColor: Color(0xff31304D),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: isLoginPage? Text('Login',style: GoogleFonts.roboto(fontSize: 16),):Text('Sign Up',style: GoogleFonts.roboto(fontSize: 16),),
+                        child: isLoginPage? Text('Login',style: GoogleFonts.roboto(fontSize: 16,color:Color(0xffF0ECE5)),):Text('Sign Up',style: GoogleFonts.roboto(fontSize: 16,color:Color(0xffF0ECE5)),),
                         ),
                       ),
-                      const SizedBox(height: 10,),
-                      Container(child: TextButton(
+                      
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateColor.resolveWith((states) => Color(0xffB6BBC4))
+                        ),
                         onPressed: (){
                           setState(() {
                             isLoginPage = !isLoginPage;
                           });
                         },
-                        child: isLoginPage?const Text('Not a member?'):const Text('Already a member ? Login!'),
+                        child: isLoginPage?const Text('Not a member?',):const Text('Already a member ? Login!'),
                         ),
                       )
                   ],
