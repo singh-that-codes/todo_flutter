@@ -27,28 +27,31 @@ class _AuthFormState extends State<AuthForm> {
       submitForm(_email,_password,_username);
     }
   }
-  submitForm(String email,String password, String username)async{
-    final auth = FirebaseAuth.instance;
-    UserCredential authresult;
-    try{
-      if(!isLoginPage){
-        authresult = await auth.signInWithEmailAndPassword(email: _email, password: _password);
-      }
-      else{
-        authresult = await auth.createUserWithEmailAndPassword(email: _email, password: _password);
-        String uid = authresult.user!.uid;
-        await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'username': _username,
-        'email': _email,
-        });
-      }
-    }
-    catch(err){
-      print(err);
-    }
-  }
+  submitForm(String email, String password, String username) async {
+  final auth = FirebaseAuth.instance;
+  UserCredential authResult;
 
-  
+  try {
+    if (!isLoginPage) {
+      authResult = await auth.signInWithEmailAndPassword(email: email, password: password);
+    } else {
+      authResult = await auth.createUserWithEmailAndPassword(email: email, password: password);
+      String uid = authResult.user?.uid ?? ''; // Use an empty string if uid is null
+      if (uid.isNotEmpty) {
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'username': username,
+          'email': email,
+        });
+      } else {
+        print('User UID is null or empty');
+      }
+    }
+  } catch (err) {
+    print(err);
+  }
+}
+
+
   //------------------------------------------
 
   @override

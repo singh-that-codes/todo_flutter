@@ -1,5 +1,5 @@
 name: tomyapp
-description: A new Flutter project.
+description: TODO APP
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^4.15.0
   cloud_firestore: ^4.13.3
   google_fonts: ^6.1.0
+  intl:
+  fluttertoast: ^8.2.4
+  #fluttertoast:
 
 dev_dependencies:
   flutter_test:
