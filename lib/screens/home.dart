@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:tomyapp/screens/add_task.dart';
 
 class Home extends StatefulWidget {
@@ -15,10 +16,10 @@ class _HomeState extends State<Home> {
   String uid = '';
 
   void initState() {
-    getuid();
+    getUid();
   }
 
-  getuid() async {
+  getUid() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = await auth.currentUser;
     setState(() {
@@ -56,11 +57,14 @@ class _HomeState extends State<Home> {
               return ListView.builder(
                 itemCount: docs.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var time = (docs[index]['timestamp'] as Timestamp)
+                      .toDate();
                   return Container(
                     margin: EdgeInsets.only(bottom: 10.0),
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
-                        borderRadius: BorderRadius.circular(10.0)),
+                      color: Colors.grey.shade900,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     height: 90,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,18 +84,23 @@ class _HomeState extends State<Home> {
                         ),
                         Container(
                           child: IconButton(
-  onPressed: () async {
-   print('Deleting document with ID: ${docs[index].id}');
-await FirebaseFirestore.instance
-  .collection('tasks')
-  .doc(uid)
-  .collection('mytasks')
-  .doc(docs[index].id)
-  .delete();
-  },
-  icon: Icon(Icons.delete),
-),
-
+                            onPressed: () async {
+                              print('Deleting document with ID: ${docs[index].id}');
+                              await FirebaseFirestore.instance
+                                  .collection('tasks')
+                                  .doc(uid)
+                                  .collection('mytasks')
+                                  .doc(docs[index].id)
+                                  .delete();
+                            },
+                            icon: Icon(Icons.delete),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            DateFormat.yMd().add_jm().format(time),
+                          ),
                         ),
                       ],
                     ),
