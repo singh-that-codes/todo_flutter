@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({Key? key}) : super(key: key);
@@ -50,7 +51,26 @@ class _AuthFormState extends State<AuthForm> {
     print(err);
   }
 }
+googleSignIn() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
+      if (googleSignInAccount == null) return; // User canceled the sign-in process
 
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final UserCredential authResult = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // You can handle the signed-in user here, for example, store user details in Firestore
+      User? user = authResult.user;
+      print('Google Sign-In successful! User ID: ${user?.uid}');
+    } catch (error) {
+      print('Google Sign-In error: $error');
+    }
+  }
 
   //------------------------------------------
 
@@ -180,6 +200,25 @@ class _AuthFormState extends State<AuthForm> {
                       )
                   ],
                 ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(5.0),
+              height: 70,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: ElevatedButton.icon(
+                onPressed: googleSignIn,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Customize the button color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                icon: Icon(Icons.g_mobiledata),
+                label: Text('Sign in with Google'),
               ),
             ),
           ],

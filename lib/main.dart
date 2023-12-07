@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StreamBuilder(
+      home: //SignInScreen(),
+      StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, usersnapshot) {
           return usersnapshot.hasData ? Home() : AuthScreen();

@@ -36,6 +36,12 @@ class _HomeState extends State<Home> {
         backgroundColor: Color(0xff31304D),
         actions: [
           IconButton(
+            onPressed: () async {
+              //await googleSignIn(); // Call the Google Sign-In method
+            },
+            icon: Icon(Icons.g_mobiledata),
+          ),
+          IconButton(
             onPressed: ()async{
               await FirebaseAuth.instance.signOut();
           }, icon: Icon(Icons.logout_outlined)),
